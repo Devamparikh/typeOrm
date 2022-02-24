@@ -40,6 +40,10 @@ export const CountUser = async () => {
 export const AvgOfAllPostByThisUser = async () => {
     const userRepo = getRepository(User);
     const users = await userRepo.createQueryBuilder("user")
-    
-    console.log("user counted ", users);
+    .leftJoin("user.posts", "post")
+    .addSelect("AVG(post.likes)", "avg")
+    .where("user.id = :id", { id: 1 })
+    .getRawMany();
+
+    console.log("user post likes avg ", users);
 };

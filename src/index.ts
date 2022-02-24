@@ -2,7 +2,7 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
 import {Post} from "./entity/Post";
-import { CreateUser, FindUser, UpdateUser, DeleteUser, CountUser} from "./user";
+import { CreateUser, FindUser, UpdateUser, DeleteUser, CountUser, AvgOfAllPostByThisUser} from "./user";
 import { CreatePost, FindPost, SumOfAllPost } from "./post";
 
 createConnection().then(async connection => {
@@ -50,6 +50,10 @@ createConnection().then(async connection => {
     // })
 
     await SumOfAllPost().catch((err) => {
+        console.log("Error: ", err);
+    })
+
+    await AvgOfAllPostByThisUser().catch((err) => {
         console.log("Error: ", err);
     })
 
