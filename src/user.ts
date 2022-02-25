@@ -47,3 +47,25 @@ export const AvgOfAllPostByThisUser = async () => {
 
     console.log("user post likes avg ", users);
 };
+
+export const CountPostByUser = async () => {
+    const userRepo = getRepository(User);
+    const users = await userRepo.createQueryBuilder("user")
+    .leftJoin("user.posts", "post")
+    .addSelect("COUNT(post.id)", "count")
+    .groupBy("user.id")
+    // .where("user.id = :id", { id: 1 })
+    .getRawMany();
+
+    console.log("total number of post by user ", users);
+};
+
+export const HavingInUser = async () => {
+const userRepo = getRepository(User);
+const users = await userRepo.createQueryBuilder("user")
+.having("user.name = :name", { name: "Alpha" })
+.andHaving("user.email = :email", { email: "devam@gmail.com" })
+.getMany();
+
+console.log("user having name and email ", users);
+};

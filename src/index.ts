@@ -2,8 +2,10 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
 import {Post} from "./entity/Post";
-import { CreateUser, FindUser, UpdateUser, DeleteUser, CountUser, AvgOfAllPostByThisUser} from "./user";
-import { CreatePost, FindPost, SumOfAllPost } from "./post";
+import { CreateUser, FindUser, UpdateUser, DeleteUser, CountUser, AvgOfAllPostByThisUser, CountPostByUser, HavingInUser} from "./user";
+import { CreatePost, FindPost, SumOfAllPost, InbuiltNotFunctionInPost, AllPostWithLikesLessThen } from "./post";
+import { CreateProfile } from "./profile";
+import { CreateLocation, FindUserFromLocation } from "./location";
 
 createConnection().then(async connection => {
 
@@ -49,13 +51,40 @@ createConnection().then(async connection => {
     //     console.log("Error: ", err);
     // })
 
-    await SumOfAllPost().catch((err) => {
+    // await SumOfAllPost().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await AvgOfAllPostByThisUser().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await CreateProfile().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await CreateLocation().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await FindUserFromLocation().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await CountPostByUser().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    await HavingInUser().catch((err) => {
         console.log("Error: ", err);
     })
 
-    await AvgOfAllPostByThisUser().catch((err) => {
+    await InbuiltNotFunctionInPost().catch((err) => {
         console.log("Error: ", err);
     })
 
+    await AllPostWithLikesLessThen().catch((err) => {
+        console.log("Error: ", err);
+    })
 
 }).catch(error => console.log(error));

@@ -1,4 +1,4 @@
-import { getRepository, createQueryBuilder } from "typeorm";
+import { getRepository, createQueryBuilder, Not, LessThan } from "typeorm";
 import { Post } from "./entity/Post";
 
 export const CreatePost = async () => {
@@ -30,4 +30,16 @@ export const SumOfAllPost = async () => {
     console.log("Sum of liked posts", post);
 };
 
+export const InbuiltNotFunctionInPost = async () => {
+    const postRepo = getRepository(Post)
+    const post = await postRepo.find({title: Not("Devam")});
+
+    console.log("all post except title equle to devam", post);
+};
+
+export const AllPostWithLikesLessThen = async () => {
+    const postRepo = getRepository(Post)
+    const post = await postRepo.find({likes: LessThan(15)})
     
+    console.log("all post with likes less then 15", post);
+};
