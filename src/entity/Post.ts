@@ -21,6 +21,9 @@ export class Post {
     @Column()
     published: boolean;
 
+    @Column({type: 'simple-json'})
+    jsonObject: { category: string, ref: string };
+
     @Column()
     likes: number;
 

@@ -1,14 +1,32 @@
-import { getRepository, createQueryBuilder, Not, LessThan } from "typeorm";
+import { getRepository, createQueryBuilder, Not, LessThan, getConnection } from "typeorm";
 import { Post } from "./entity/Post";
+import { User } from "./entity/User";
 
 export const CreatePost = async () => {
+    const connection = getConnection();
+    const userRepo = getRepository(User);
     const postRepo = getRepository(Post);
+
+    const user = new User();
+    user.id = 3;
+    // await connection.manager.save(user);
+
+    // const post = new Post();
+    // post.title = "me.jpg";
+    // post.authorId = user;
+    // await connection.manager.save(post);
+
     const post = postRepo.create({
-        title: "Devam",
+        title: "Alpha",
         content: "devam1@gmail.com",
         published: false,
+        jsonObject: {category: 'Black Life Matter', ref:'current affairs'},
+        likes: 11,
+        authorId: user
     });
     await postRepo.save(post).catch((err) => {
+        console.log("can not be saved");
+        
         console.log("Error: ", err);
     });
     console.log("New post saved ", post);

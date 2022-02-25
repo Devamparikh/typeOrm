@@ -27,9 +27,9 @@ createConnection().then(async connection => {
     //     console.log("Error: ", err);
     // })
 
-    // await CreatePost().catch((err) => {
-    //     console.log("Error: ", err);
-    // })
+    await CreatePost().catch((err) => {
+        console.log("Error: ", err);
+    })
 
     // await FindUser().catch((err) => {
     //     console.log("Error: ", err);
@@ -75,16 +75,16 @@ createConnection().then(async connection => {
     //     console.log("Error: ", err);
     // })
 
-    await HavingInUser().catch((err) => {
-        console.log("Error: ", err);
-    })
+    // await HavingInUser().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
 
-    await InbuiltNotFunctionInPost().catch((err) => {
-        console.log("Error: ", err);
-    })
+    // await InbuiltNotFunctionInPost().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
 
-    await AllPostWithLikesLessThen().catch((err) => {
-        console.log("Error: ", err);
-    })
+    // await AllPostWithLikesLessThen().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
 
 }).catch(error => console.log(error));
