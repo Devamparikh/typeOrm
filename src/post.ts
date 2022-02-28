@@ -1,4 +1,4 @@
-import { getRepository, createQueryBuilder, Not, LessThan, getConnection } from "typeorm";
+import { getRepository, createQueryBuilder, Not, LessThan, getConnection, Between } from "typeorm";
 import { Post } from "./entity/Post";
 import { User } from "./entity/User";
 
@@ -8,7 +8,7 @@ export const CreatePost = async () => {
     const postRepo = getRepository(Post);
 
     const user = new User();
-    user.id = 3;
+    user.id = 1;
     // await connection.manager.save(user);
 
     // const post = new Post();
@@ -17,11 +17,11 @@ export const CreatePost = async () => {
     // await connection.manager.save(post);
 
     const post = postRepo.create({
-        title: "Alpha",
-        content: "devam1@gmail.com",
-        published: false,
+        title: "Mayur",
+        content: "mayur's contant",
+        published: true,
         jsonObject: {category: 'Black Life Matter', ref:'current affairs'},
-        likes: 11,
+        likes: 25,
         authorId: user
     });
     await postRepo.save(post).catch((err) => {
@@ -48,6 +48,16 @@ export const SumOfAllPost = async () => {
     console.log("Sum of liked posts", post);
 };
 
+export const SumOfAllLikesByGroup = async () => {
+    const postRepo = getRepository(Post);
+    const post = await postRepo.createQueryBuilder("post")
+    .select("SUM(post.likes)", "sum")
+    .groupBy("authorIdId")
+    .getRawOne();
+    
+    console.log("Sum of liked posts by group", post);
+};
+
 export const InbuiltNotFunctionInPost = async () => {
     const postRepo = getRepository(Post)
     const post = await postRepo.find({title: Not("Devam")});
@@ -60,4 +70,18 @@ export const AllPostWithLikesLessThen = async () => {
     const post = await postRepo.find({likes: LessThan(15)})
     
     console.log("all post with likes less then 15", post);
+};
+
+export const retrieveJsonObject = async () => {
+    const postRepo = getRepository(Post)
+    const post = await postRepo.find({title: 'Alpha'})
+    
+    console.log("retrieve Json Object", post);
+};
+
+export const findPostBetweenDates = async () => {
+    const postRepo = getRepository(Post)
+    const post = await postRepo.find({updatedAt: Between('2022-02-24','2022-02-26')})
+    
+    console.log("post between given dates", post);
 };

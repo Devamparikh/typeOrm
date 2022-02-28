@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToOne, JoinColumn,OneToMany} from "typeorm";
 import { Location } from "./Location";
 import { User } from "./User";
 

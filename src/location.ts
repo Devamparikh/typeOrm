@@ -1,6 +1,8 @@
 import { getRepository, createQueryBuilder } from "typeorm";
 import { Location } from "./entity/Location";
 import { User } from "./entity/User";
+import { Profile } from "./entity/Profile";
+
 
 
 export const CreateLocation = async () => {
@@ -24,4 +26,20 @@ export const FindUserFromLocation = async () => {
     .getRawOne();
     
     console.log("User data from location", profile);
+};
+
+export const FindUserGroupByLocation = async () => {
+    // const locationRepo = getRepository(Location);
+    // const profile = await locationRepo.createQueryBuilder("location")
+    
+    // .leftJoinAndSelect(Profile, "profile", "profile.id = location.profileId")
+    // .leftJoinAndSelect(User, "user", "user.id = profile.userId")
+
+    // // .innerJoinAndMapMany("location.userId", "profile.user","user", "user.id = profile.userId")
+    // // .addSelect("COUNT(location.city)", "count")
+    // .groupBy("location.city")
+    // .printSql()
+    // .getRawMany();
+    
+    // console.log("User data from location", profile);
 };

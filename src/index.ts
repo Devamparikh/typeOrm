@@ -1,11 +1,17 @@
 import "reflect-metadata";
+const { JSDOM } = require("jsdom")
+
+const { window } = new JSDOM()
+
+const logger = require("./logger/logger.js")
+// const moment = require('moment');
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
 import {Post} from "./entity/Post";
-import { CreateUser, FindUser, UpdateUser, DeleteUser, CountUser, AvgOfAllPostByThisUser, CountPostByUser, HavingInUser} from "./user";
-import { CreatePost, FindPost, SumOfAllPost, InbuiltNotFunctionInPost, AllPostWithLikesLessThen } from "./post";
+import { CreateUser, FindUser, UpdateUser, DeleteUser, CountUser, AvgOfAllPostByThisUser, CountPostByUser, HavingInUser, userGroupByRole} from "./user";
+import { CreatePost, FindPost, SumOfAllPost, InbuiltNotFunctionInPost, AllPostWithLikesLessThen, retrieveJsonObject, findPostBetweenDates, SumOfAllLikesByGroup } from "./post";
 import { CreateProfile } from "./profile";
-import { CreateLocation, FindUserFromLocation } from "./location";
+import { CreateLocation, FindUserFromLocation, FindUserGroupByLocation } from "./location";
 
 createConnection().then(async connection => {
 
@@ -27,9 +33,9 @@ createConnection().then(async connection => {
     //     console.log("Error: ", err);
     // })
 
-    await CreatePost().catch((err) => {
-        console.log("Error: ", err);
-    })
+    // await CreatePost().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
 
     // await FindUser().catch((err) => {
     //     console.log("Error: ", err);
@@ -47,7 +53,7 @@ createConnection().then(async connection => {
     //     console.log("Error: ", err);
     // })
 
-    // await CountUser().catch((err) => {
+    // await CountUn                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                bgser().catch((err) => {
     //     console.log("Error: ", err);
     // })
 
@@ -86,5 +92,38 @@ createConnection().then(async connection => {
     // await AllPostWithLikesLessThen().catch((err) => {
     //     console.log("Error: ", err);
     // })
+
+    // await retrieveJsonObject().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await findPostBetweenDates().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+    
+    // await FindUserGroupByLocation().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    // await userGroupByRole().catch((err) => {
+    //     console.log("Error: ", err);
+    // })
+
+    const start = window.performance.now()
+    const functionName = 'userGroupByRole';
+    const numberOfIteration = 1000;
+
+    for (let index = 0; index < numberOfIteration; index++) {
+        
+        await userGroupByRole().catch((err) => {
+        console.log("Error: ", err);
+    })
+        
+    }
+
+    const stop = window.performance.now();
+    const executionTime = (stop - start)/1000;
+    logger.info(`Time for exection of function ${functionName}, number of iteration performed ${numberOfIteration}, Time Taken to execute ${executionTime} seconds`)
+    console.log(`Time Taken to execute = ${(stop - start)/1000} seconds`);
 
 }).catch(error => console.log(error));

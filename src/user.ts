@@ -1,5 +1,9 @@
 import { getRepository } from "typeorm";
 import { User } from "./entity/User";
+import { Profile } from "./entity/Profile";
+import { Location } from "./entity/Location";
+
+
 
 export const CreateUser = async () => {
     const userRepo = getRepository(User);
@@ -15,7 +19,7 @@ export const CreateUser = async () => {
 
 export const FindUser = async () => {
     const userRepo = getRepository(User);
-    const users = await userRepo.find({ relations: ["posts"] });
+    const users = await userRepo.find({ name: "Alpha" });
     console.log("New user found ", users[0]);
 };
 
@@ -68,4 +72,18 @@ const users = await userRepo.createQueryBuilder("user")
 .getMany();
 
 console.log("user having name and email ", users);
+};
+
+export const userGroupByRole = async () => {
+    const userRepo = getRepository(User);
+    const users = await userRepo.createQueryBuilder("user")
+    .groupBy("user.role")    
+    .leftJoinAndSelect(Profile,  "profile", "user.id = profile.userId")
+    .leftJoinAndSelect(Location, "location", "location.profileId = profile.id")
+    .addSelect("GROUP_CONCAT(user.name)", "group")
+    .addSelect("COUNT(user.role)", "count")
+    .getRawMany();
+    // .getSql();
+    
+    console.log("user profile by user id ", users);
 };
